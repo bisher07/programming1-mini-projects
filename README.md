@@ -1,2 +1,7 @@
-# programming1-mini-projects
-A collection of mini projects from my Programming 1 course, each under 250 lines, focused on practicing core programming concepts and problem-solving skills.
+This repository contains my mini projects from Programming 1.
+
+Each project is small (under 200 lines) and focuses on practicing core concepts like:
+- loops
+- functions
+- arrays
+- basic problem solving
