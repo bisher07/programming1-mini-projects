@@ -4,4 +4,6 @@ Each project is small (under 200 lines) and focuses on practicing core concepts 
 - loops
 - functions
 - arrays
+- pointers
+- structs
 - basic problem solving
