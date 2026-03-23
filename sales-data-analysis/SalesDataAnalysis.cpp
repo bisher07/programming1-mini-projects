@@ -56,13 +56,14 @@ enum quarters
     QT3 = 2,
     QT4 = 3
 };
+
 struct SalesPersonRecord
 {
     string ID;
 
-    double saleByQuarter[4];
+    double saleByQuarter[4] = {0.0, 0.0, 0.0, 0.0};
 
-    double totalAmount;
+    double totalAmount = 0.0;
 
     void printRow(ofstream &outFile)
     {
@@ -73,7 +74,7 @@ struct SalesPersonRecord
 
 void init(ifstream &inID, SalesPersonRecord list[], int listSize, double salesByQuarter[]);
 void getData(ifstream &inData, SalesPersonRecord list[], int listSize);
-void totalSalesByQuarter(SalesPersonRecord list[], int listsize, double salesByQuarter[]);
+void totalSalesByQuarter(ofstream &outFile, SalesPersonRecord list[], int listsize, double salesByQuarter[]);
 void maxSaleBySalePerson(ofstream &outFile, SalesPersonRecord list[], int listSize);
 void maxSaleByQuarter(ofstream &outFile, double salesByQuarter[]);
 
@@ -90,7 +91,6 @@ int main()
 
     inFile.close();
     inFile.clear();
-
     inFile.open("Data.txt");
     outFile.open("Data Table.txt");
     outFile << showpoint << fixed << setprecision(2);
@@ -107,13 +107,7 @@ int main()
         list[i].printRow(outFile);
     }
 
-    totalSalesByQuarter(list, no_Of_Sales_Person, salesByQuarter);
-
-    outFile << setw(7) << left << "Total  " << setw(10) << left << salesByQuarter[QT1] << setw(10) << left
-            << salesByQuarter[QT2] << setw(10) << left << salesByQuarter[QT3]
-            << setw(10) << left << salesByQuarter[QT4] << endl
-            << endl;
-
+    totalSalesByQuarter(outFile, list, no_Of_Sales_Person, salesByQuarter);
     maxSaleBySalePerson(outFile, list, no_Of_Sales_Person);
     maxSaleByQuarter(outFile, salesByQuarter);
 
@@ -128,13 +122,6 @@ void init(ifstream &inID, SalesPersonRecord list[], int listSize, double salesBy
     for (int i = 0; i < listSize; i++)
     {
         inID >> list[i].ID;
-
-        for (quarters quarter = QT1; quarter <= QT4; quarter = static_cast<quarters>(quarter + 1))
-        {
-            list[i].saleByQuarter[quarter] = 0.0;
-        }
-
-        list[i].totalAmount = 0.0;
     }
 
     for (quarters quarter = QT1; quarter <= QT4; quarter = static_cast<quarters>(quarter + 1))
@@ -195,7 +182,7 @@ void getData(ifstream &inData, SalesPersonRecord list[], int listSize)
     }
 }
 
-void totalSalesByQuarter(SalesPersonRecord list[], int listsize, double salesByQuarter[])
+void totalSalesByQuarter(ofstream &outFile, SalesPersonRecord list[], int listsize, double salesByQuarter[])
 {
     for (int i = 0; i < listsize; i++)
     {
@@ -204,6 +191,11 @@ void totalSalesByQuarter(SalesPersonRecord list[], int listsize, double salesByQ
             salesByQuarter[quarter] += list[i].saleByQuarter[quarter];
         }
     }
+
+    outFile << setw(7) << left << "Total  " << setw(10) << left << salesByQuarter[QT1] << setw(10) << left
+            << salesByQuarter[QT2] << setw(10) << left << salesByQuarter[QT3]
+            << setw(10) << left << salesByQuarter[QT4] << endl
+            << endl;
 }
 
 void maxSaleBySalePerson(ofstream &outFile, SalesPersonRecord list[], int listSize)
