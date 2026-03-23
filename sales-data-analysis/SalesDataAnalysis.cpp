@@ -56,7 +56,6 @@ enum quarters
     QT3 = 2,
     QT4 = 3
 };
-
 struct SalesPersonRecord
 {
     string ID;
@@ -64,6 +63,12 @@ struct SalesPersonRecord
     double saleByQuarter[4];
 
     double totalAmount;
+
+    void printRow(ofstream &outFile)
+    {
+        outFile << setw(7) << left << ID << setw(10) << left << saleByQuarter[QT1] << setw(10) << left << saleByQuarter[QT2] << setw(10) << left
+                << saleByQuarter[QT3] << setw(10) << left << saleByQuarter[QT4] << setw(10) << left << totalAmount << endl;
+    }
 };
 
 void init(ifstream &inID, SalesPersonRecord list[], int listSize, double salesByQuarter[]);
@@ -99,8 +104,7 @@ int main()
 
     for (int i = 0; i < no_Of_Sales_Person; i++)
     {
-        outFile << setw(7) << left << list[i].ID << setw(10) << left << list[i].saleByQuarter[QT1] << setw(10) << left << list[i].saleByQuarter[QT2] << setw(10) << left
-                << list[i].saleByQuarter[QT3] << setw(10) << left << list[i].saleByQuarter[QT4] << setw(10) << left << list[i].totalAmount << endl;
+        list[i].printRow(outFile);
     }
 
     totalSalesByQuarter(list, no_Of_Sales_Person, salesByQuarter);
